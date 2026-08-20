@@ -5,7 +5,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Index;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.Column;
-import dev.forgepack.core.internal.model.GenericAuditEntity;
+import dev.forgepack.core.internal.model.EntityCrud;
 
 /**
  * Domain entity representing a fine-grained permission within the authorization model.
@@ -50,7 +50,7 @@ import dev.forgepack.core.internal.model.GenericAuditEntity;
  */
 @Entity
 @Table(indexes = @Index(columnList = "name"), uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
-public class Privilege extends GenericAuditEntity {
+public class Privilege extends EntityCrud {
 
     @Column(nullable = false, unique = true)
     private String name;

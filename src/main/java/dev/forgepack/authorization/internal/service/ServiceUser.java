@@ -1,8 +1,8 @@
 package dev.forgepack.authorization.internal.service;
 
 import dev.forgepack.core.api.mapper.Mapper;
-import dev.forgepack.core.api.repository.RepositoryGeneric;
-import dev.forgepack.core.internal.service.ServiceGenericImpl;
+import dev.forgepack.core.api.repository.RepositoryCrud;
+import dev.forgepack.core.internal.service.ServiceCrudRestorableImpl;
 import dev.forgepack.validation.api.service.ServiceUniqueCheckable;
 import dev.forgepack.authorization.internal.model.User;
 import dev.forgepack.authorization.internal.payload.DTORequestUser;
@@ -18,12 +18,12 @@ import java.security.SecureRandom;
 import java.util.UUID;
 
 @Service
-public class ServiceUser extends ServiceGenericImpl<User, DTORequestUser, DTOResponseUser> implements ServiceUniqueCheckable {
+public class ServiceUser extends ServiceCrudRestorableImpl<User, DTORequestUser, DTOResponseUser> implements ServiceUniqueCheckable {
 
     private final RepositoryUser repositoryUser;
-    private static final Logger log = LoggerFactory.getLogger(Information.class);
+    private static final Logger log = LoggerFactory.getLogger(ServiceUser.class);
 
-    public ServiceUser(RepositoryGeneric<User> repositoryGeneric, Mapper<User, DTORequestUser, DTOResponseUser> mapperInterface, RepositoryUser repositoryUser) {
+    public ServiceUser(RepositoryCrud<User> repositoryGeneric, Mapper<User, DTORequestUser, DTOResponseUser> mapperInterface, RepositoryUser repositoryUser) {
         super(User.class, repositoryGeneric, mapperInterface);
         this.repositoryUser = repositoryUser;
     }

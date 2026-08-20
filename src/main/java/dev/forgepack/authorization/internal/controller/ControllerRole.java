@@ -1,11 +1,10 @@
 package dev.forgepack.authorization.internal.controller;
 
-import dev.forgepack.core.api.controller.ControllerLifecycle;
 import dev.forgepack.authorization.internal.model.Role;
 import dev.forgepack.authorization.internal.payload.DTORequestRole;
 import dev.forgepack.authorization.internal.payload.DTOResponseRole;
 import dev.forgepack.authorization.internal.service.ServiceRole;
-import dev.forgepack.core.internal.controller.ControllerGenericImpl;
+import dev.forgepack.core.internal.controller.ControllerCrudRestorableImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/role")
-public class ControllerRole extends ControllerGenericImpl<Role, DTORequestRole, DTOResponseRole> implements ControllerLifecycle<DTOResponseRole> {
+public class ControllerRole extends ControllerCrudRestorableImpl<Role, DTORequestRole, DTOResponseRole> {
 
     private final ServiceRole serviceRole;
 

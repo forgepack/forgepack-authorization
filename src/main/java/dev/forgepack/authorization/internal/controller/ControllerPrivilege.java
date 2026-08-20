@@ -1,11 +1,10 @@
 package dev.forgepack.authorization.internal.controller;
 
-import dev.forgepack.core.api.controller.ControllerLifecycle;
 import dev.forgepack.authorization.internal.model.Privilege;
 import dev.forgepack.authorization.internal.payload.DTORequestPrivilege;
 import dev.forgepack.authorization.internal.payload.DTOResponsePrivilege;
 import dev.forgepack.authorization.internal.service.ServicePrivilege;
-import dev.forgepack.core.internal.controller.ControllerGenericImpl;
+import dev.forgepack.core.internal.controller.ControllerCrudRestorableImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/privilege")
-public class ControllerPrivilege extends ControllerGenericImpl<Privilege, DTORequestPrivilege, DTOResponsePrivilege> implements ControllerLifecycle<DTOResponsePrivilege> {
+public class ControllerPrivilege extends ControllerCrudRestorableImpl<Privilege, DTORequestPrivilege, DTOResponsePrivilege> {
 
     private final ServicePrivilege servicePrivilege;
 

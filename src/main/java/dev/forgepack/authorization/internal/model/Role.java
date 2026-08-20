@@ -12,7 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Column;
 import java.util.HashSet;
 import java.util.Set;
-import dev.forgepack.core.internal.model.GenericAuditEntity;
+import dev.forgepack.core.internal.model.EntityCrud;
 
 /**
  * Domain entity representing a role in the authorization model.
@@ -66,7 +66,7 @@ import dev.forgepack.core.internal.model.GenericAuditEntity;
  */
 @Entity
 @Table(indexes = @Index(columnList = "name"), uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
-public class Role extends GenericAuditEntity {
+public class Role extends EntityCrud {
 
     @Column(nullable = false, unique = true)
     private String name;

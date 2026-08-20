@@ -13,7 +13,7 @@ import jakarta.persistence.Column;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import dev.forgepack.core.internal.model.GenericAuditEntity;
+import dev.forgepack.core.internal.model.EntityCrud;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -79,7 +79,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"email"})
     }
 )
-public class User extends GenericAuditEntity implements UserDetails {
+public class User extends EntityCrud implements UserDetails {
 
     @Column(nullable = false, unique = true)
     private String username;
