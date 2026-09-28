@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>dev.forgepack</groupId>
 	<artifactId>forgepack-authorization</artifactId>
-	<version>0.0.5</version>
+	<version>0.0.6</version>
 	<name>Forgepack Authorization Library</name>
 	<description>Complete RBAC model: User/Role/Privilege with their endpoints, DTOs, and services.</description>
 	<url>https://github.com/orgs/forgepack/forgepack-authorization</url>
@@ -47,6 +47,11 @@
 			<groupId>dev.forgepack</groupId>
 			<artifactId>forgepack-core</artifactId>
 			<version>0.0.23</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 	</dependencies>
 
