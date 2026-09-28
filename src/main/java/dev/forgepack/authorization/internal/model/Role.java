@@ -12,7 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Column;
 import java.util.HashSet;
 import java.util.Set;
-import dev.forgepack.core.internal.model.EntityCrud;
+import dev.forgepack.core.api.model.EntityCrud;
 
 /**
  * Domain entity representing a role in the authorization model.
@@ -47,7 +47,7 @@ import dev.forgepack.core.internal.model.EntityCrud;
  *
  * <h3>Auditing</h3>
  * <p>Auditing is enabled via {@link org.hibernate.envers.Audited},
- * inheriting lifecycle metadata from {@link GenericAuditEntity}.</p>
+ * inheriting lifecycle metadata from {@link EntityCrud}.</p>
  *
  * <h3>Architectural Notes</h3>
  * <ul>
@@ -60,7 +60,7 @@ import dev.forgepack.core.internal.model.EntityCrud;
  * @version 1.0
  * @since 1.0
  *
- * @see GenericAuditEntity
+ * @see EntityCrud
  * @see Privilege
  * @see User
  */

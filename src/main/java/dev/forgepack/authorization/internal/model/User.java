@@ -13,7 +13,7 @@ import jakarta.persistence.Column;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import dev.forgepack.core.internal.model.EntityCrud;
+import dev.forgepack.core.api.model.EntityCrud;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,7 +52,7 @@ import java.util.Set;
  *
  * <h3>Auditing</h3>
  * <p>Full auditing is enabled via {@link org.hibernate.envers.Audited},
- * inheriting creation and modification metadata from {@link GenericAuditEntity}.</p>
+ * inheriting creation and modification metadata from {@link EntityCrud}.</p>
  *
  * <h3>Architectural Notes</h3>
  * <ul>
@@ -65,7 +65,7 @@ import java.util.Set;
  * @version 1.0
  * @since 1.0
  *
- * @see GenericAuditEntity
+ * @see EntityCrud
  * @see Role
  */
 @Entity
