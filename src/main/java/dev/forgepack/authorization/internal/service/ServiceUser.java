@@ -8,7 +8,7 @@ import dev.forgepack.authorization.internal.model.User;
 import dev.forgepack.authorization.internal.payload.DTORequestUser;
 import dev.forgepack.authorization.internal.payload.DTOResponseUser;
 import dev.forgepack.authorization.internal.repository.RepositoryUser;
-import dev.forgepack.security.internal.utils.Information;
+// import dev.forgepack.security.internal.utils.Information;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
@@ -81,33 +81,33 @@ public class ServiceUser extends ServiceCrudRestorableImpl<User, DTORequestUser,
         return new String(chars);
     }
     public User isValidToChange(UUID id) {
-        String currentUser = Information.getCurrentUser().orElse("Unknown User");
+        // String currentUser = Information.getCurrentUser().orElse("Unknown User");
         User user = repositoryUser.findByIdAndDeletedAtIsNull(id).orElseThrow(() -> new EntityNotFoundException("Resource not found"));
-        User userCurrent = repositoryUser.findByUsername(currentUser).orElseThrow(() -> new EntityNotFoundException("Current user not found"));
-        if ((userCurrent.getUsername() != null && user.getUsername() != null &&
-                userCurrent.getUsername().equals(user.getUsername())) ||
-                userCurrent.getRole().stream().anyMatch(role -> role.getName().equals("ADMIN"))) {
-            return user;
-        } else {
-            log.warn("{} attempted unauthorized access to user with ID: {}", currentUser, id);
+        // User userCurrent = repositoryUser.findByUsername(currentUser).orElseThrow(() -> new EntityNotFoundException("Current user not found"));
+        // if ((userCurrent.getUsername() != null && user.getUsername() != null &&
+        //         userCurrent.getUsername().equals(user.getUsername())) ||
+        //         userCurrent.getRole().stream().anyMatch(role -> role.getName().equals("ADMIN"))) {
+        //     return user;
+        // } else {
+        //     log.warn("{} attempted unauthorized access to user with ID: {}", currentUser, id);
             throw new EntityNotFoundException("Resource not found");
-        }
+        // }
     }
     public User isValidToChange(String username) {
         User user = repositoryUser.findByUsername(username.trim())
                 .orElseThrow(() -> new EntityNotFoundException("Resource not found"));
-        String currentUsername = Information.getCurrentUser().orElse(null);
-        if (currentUsername == null) {
-            return user;
-        }
-        User currentUser = repositoryUser.findByUsername(currentUsername)
-                .orElseThrow(() -> new EntityNotFoundException("Current user not found"));
-        boolean isSameUser = currentUser.getUsername().equalsIgnoreCase(user.getUsername());
-        boolean isAdmin   = currentUser.getRole().stream().anyMatch(role -> role.getName().equals("ADMIN"));
-        if (isSameUser || isAdmin) {
-            return user;
-        }
-        log.warn("{} attempted unauthorized access to user with username: {}", currentUsername, username);
+        // String currentUsername = Information.getCurrentUser().orElse(null);
+        // if (currentUsername == null) {
+        //     return user;
+        // }
+        // User currentUser = repositoryUser.findByUsername(currentUsername)
+        //         .orElseThrow(() -> new EntityNotFoundException("Current user not found"));
+        // boolean isSameUser = currentUser.getUsername().equalsIgnoreCase(user.getUsername());
+        // boolean isAdmin   = currentUser.getRole().stream().anyMatch(role -> role.getName().equals("ADMIN"));
+        // if (isSameUser || isAdmin) {
+        //     return user;
+        // }
+        // log.warn("{} attempted unauthorized access to user with username: {}", currentUsername, username);
         throw new EntityNotFoundException("Resource not found");
     }
 }

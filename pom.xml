@@ -48,12 +48,6 @@
 			<artifactId>forgepack-core</artifactId>
 			<version>0.0.23</version>
 		</dependency>
-		<!-- Forgepack: security -->
-		<dependency>
-			<groupId>dev.forgepack</groupId>
-			<artifactId>forgepack-security</artifactId>
-			<version>0.0.5</version>
-		</dependency>
 	</dependencies>
 
 	<build>
