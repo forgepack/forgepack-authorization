@@ -80,18 +80,17 @@ Internal implementation details are encapsulated in `dev.forgepack.authorization
 
 ### 4.1. Current Coverage Metrics
 
-GENERAL COVERAGE: 0%
-TOTAL NUMBER OF TESTS: 0
+INSTRUCTION COVERAGE: 78%
+BRANCH COVERAGE: 100%
+TOTAL NUMBER OF TESTS: 10
 
 | Package                                              | Coverage |        |
 |:-----------------------------------------------------|:--------:|:------:|
-| 📁 dev.forgepack.authorization.api                  |    0%    |   🔴   |
-| 📁 dev.forgepack.authorization.internal             |    0%    |   🔴   |
+| 📁 dev.forgepack.authorization.api                  |   N/A    |   -    |
+| 📁 dev.forgepack.authorization.internal             |   78%    |   🟡   |
 
 ### 4.2. Types of Tests Implemented
-1. __Unit Tests__: Service and component layer
-2. __Integration Tests__: Spring context loading via `@SpringBootTest`
-3. __Auto-Configuration Tests__: `ApplicationContextRunner` scenarios
+1. __Unit Tests__: Uniqueness checks in services, mapper conversions, and secure password generation
 
 ### 4.3. Running Tests
 ```bash
