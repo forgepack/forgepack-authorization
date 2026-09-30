@@ -1,7 +1,12 @@
+<div align="center">
+
 # _forgepack-authorization_
+
 [![GitHub stars](https://img.shields.io/github/stars/forgepack/forgepack-authorization?style=social)](https://github.com/forgepack/forgepack-authorization)
 [![GitHub forks](https://img.shields.io/github/forks/forgepack/forgepack-authorization?style=social)](https://github.com/forgepack/forgepack-authorization/fork)
 [![GitHub watchers](https://img.shields.io/github/watchers/forgepack/forgepack-authorization?style=social)](https://github.com/forgepack/forgepack-authorization)
+
+</div>
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/forgepack/forgepack-authorization)
 ![Maven Central](https://img.shields.io/maven-central/v/dev.forgepack/authorization)
