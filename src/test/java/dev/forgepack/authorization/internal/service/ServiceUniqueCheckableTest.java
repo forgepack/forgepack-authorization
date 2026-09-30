@@ -6,7 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+
+import jakarta.persistence.EntityNotFoundException;
 
 import dev.forgepack.authorization.internal.model.Privilege;
 import dev.forgepack.authorization.internal.model.Role;
@@ -134,5 +138,37 @@ class ServiceUniqueCheckableTest {
         assertTrue(password.chars().anyMatch(Character::isLowerCase));
         assertTrue(password.chars().anyMatch(Character::isDigit));
         assertTrue(password.chars().anyMatch(character -> "!@#$%^&*()-_=+[]{}|;:,.<>?".indexOf(character) >= 0));
+    }
+
+    @Test
+    void isValidToChangeByIdAlwaysThrowsWhenUserExists() {
+        UUID id = UUID.randomUUID();
+        User user = new User("jane", "jane@example.test", Set.of());
+        when(repositoryUser.findByIdAndDeletedAtIsNull(id)).thenReturn(Optional.of(user));
+
+        assertThrows(EntityNotFoundException.class, () -> serviceUser.isValidToChange(id));
+    }
+
+    @Test
+    void isValidToChangeByIdThrowsWhenUserNotFound() {
+        UUID id = UUID.randomUUID();
+        when(repositoryUser.findByIdAndDeletedAtIsNull(id)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> serviceUser.isValidToChange(id));
+    }
+
+    @Test
+    void isValidToChangeByUsernameAlwaysThrowsWhenUserExists() {
+        User user = new User("jane", "jane@example.test", Set.of());
+        when(repositoryUser.findByUsername("jane")).thenReturn(Optional.of(user));
+
+        assertThrows(EntityNotFoundException.class, () -> serviceUser.isValidToChange("jane"));
+    }
+
+    @Test
+    void isValidToChangeByUsernameThrowsWhenUserNotFound() {
+        when(repositoryUser.findByUsername("jane")).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> serviceUser.isValidToChange("jane"));
     }
 }

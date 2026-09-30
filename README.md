@@ -6,7 +6,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/forgepack/forgepack-authorization)
 ![Maven Central](https://img.shields.io/maven-central/v/dev.forgepack/authorization)
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Test Coverage](https://img.shields.io/badge/coverage-0%25-red)
+![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
 
 ## Tech Stack
 ![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
@@ -80,17 +80,27 @@ Internal implementation details are encapsulated in `dev.forgepack.authorization
 
 ### 4.1. Current Coverage Metrics
 
-INSTRUCTION COVERAGE: 78%
+_Last measured with `mvn clean test jacoco:report` (JaCoCo 0.8.15)._
+
+INSTRUCTION COVERAGE: 100%
+LINE COVERAGE: 100%
 BRANCH COVERAGE: 100%
-TOTAL NUMBER OF TESTS: 10
+TOTAL NUMBER OF TESTS: 23
 
 | Package                                              | Coverage |        |
 |:-----------------------------------------------------|:--------:|:------:|
 | 📁 dev.forgepack.authorization.api                  |   N/A    |   -    |
-| 📁 dev.forgepack.authorization.internal             |   78%    |   🟡   |
+| 📁 dev.forgepack.authorization.internal.model       |   100%   |   🟢   |
+| 📁 dev.forgepack.authorization.internal.controller  |   100%   |   🟢   |
+| 📁 dev.forgepack.authorization.internal.payload     |   100%   |   🟢   |
+| 📁 dev.forgepack.authorization.internal.service     |   100%   |   🟢   |
+| 📁 dev.forgepack.authorization.internal.mapper      |   100%   |   🟢   |
 
 ### 4.2. Types of Tests Implemented
-1. __Unit Tests__: Uniqueness checks in services, mapper conversions, and secure password generation
+1. __Unit Tests__: uniqueness checks in services, mapper conversions (entity ↔ DTO, including null-safety), secure password generation, and `isValidToChange` guard behavior
+2. __Model Tests__: entity constructors, getters and setters (`User`, `Role`, `Privilege`)
+3. __DTO Tests__: response DTO accessors and HATEOAS/`DTOIdentifiable` contract (`getId()`/`id()`)
+4. __Controller Tests__: REST controller delegation to services for `hardDelete` and `restore` endpoints, using Mockito service mocks and asserting HTTP status codes
 
 ### 4.3. Running Tests
 ```bash
