@@ -8,17 +8,16 @@
 
 </div>
 
-![GitHub last commit](https://img.shields.io/github/last-commit/forgepack/forgepack-authorization)
-![Maven Central](https://img.shields.io/maven-central/v/dev.forgepack/authorization)
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
-
 ## Tech Stack
 ![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.0-brightgreen?logo=springboot)
 ![Maven](https://img.shields.io/badge/Maven-3.8+-blue?logo=apachemaven)
 
 ## Description
+![GitHub last commit](https://img.shields.io/github/last-commit/forgepack/forgepack-authorization)
+![Maven Central](https://img.shields.io/maven-central/v/dev.forgepack/authorization)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
 
 _forgepack-authorization_ is a Spring Boot auto-configuration library that {DESCRIPTION}.
 
