@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>dev.forgepack</groupId>
 	<artifactId>forgepack-authorization</artifactId>
-	<version>0.0.8</version>
+	<version>0.0.9</version>
 	<name>Forgepack Authorization Library</name>
 	<description>Complete RBAC model: User/Role/Privilege with their endpoints, DTOs, and services.</description>
 	<url>https://github.com/orgs/forgepack/forgepack-authorization</url>
@@ -47,7 +47,13 @@
 		<dependency>
 			<groupId>dev.forgepack</groupId>
 			<artifactId>forgepack-core</artifactId>
-			<version>0.0.23</version>
+			<version>0.0.25</version>
+		</dependency>
+		<!-- Forgepack: validation -->
+		<dependency>
+			<groupId>dev.forgepack</groupId>
+			<artifactId>forgepack-validation</artifactId>
+			<version>0.0.8</version>
 		</dependency>
 		<!-- Test: open source testing framework -->
         <dependency>
