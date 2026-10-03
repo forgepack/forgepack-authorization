@@ -1,5 +1,6 @@
 package dev.forgepack.authorization.internal.model;
 
+import org.hibernate.envers.Audited;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Index;
@@ -64,6 +65,7 @@ import java.util.Set;
  * @see EntityCrud
  * @see Role
  */
+@Audited
 @Entity
 @Table(name = "users",
     indexes = {

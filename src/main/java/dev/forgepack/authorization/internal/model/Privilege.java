@@ -1,5 +1,6 @@
 package dev.forgepack.authorization.internal.model;
 
+import org.hibernate.envers.Audited;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Index;
@@ -48,6 +49,7 @@ import dev.forgepack.core.api.model.EntityCrud;
  * @see EntityCrud
  * @see Role
  */
+@Audited
 @Entity
 @Table(indexes = @Index(columnList = "name"), uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 public class Privilege extends EntityCrud {
