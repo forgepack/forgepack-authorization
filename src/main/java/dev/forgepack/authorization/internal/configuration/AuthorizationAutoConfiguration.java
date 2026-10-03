@@ -4,9 +4,9 @@ import dev.forgepack.authorization.internal.model.Privilege;
 import dev.forgepack.authorization.internal.model.Role;
 import dev.forgepack.authorization.internal.model.User;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 
 @AutoConfiguration
-@EntityScan(basePackageClasses = {Privilege.class, Role.class, User.class})
+@AutoConfigurationPackage(basePackageClasses = {Privilege.class, Role.class, User.class})
 public class AuthorizationAutoConfiguration {
 }
