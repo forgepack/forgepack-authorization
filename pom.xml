@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>dev.forgepack</groupId>
 	<artifactId>forgepack-authorization</artifactId>
-	<version>0.0.9</version>
+	<version>0.0.10</version>
 	<name>Forgepack Authorization Library</name>
 	<description>Complete RBAC model: User/Role/Privilege with their endpoints, DTOs, and services.</description>
 	<url>https://github.com/orgs/forgepack/forgepack-authorization</url>
