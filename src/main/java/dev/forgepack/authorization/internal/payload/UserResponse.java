@@ -60,16 +60,16 @@ import java.util.UUID;
  *
  * @see org.springframework.hateoas.RepresentationModel
  */
-public class DTOResponseUser extends RepresentationModel<DTOResponseUser> implements DTOIdentifiable<UUID> {
+public class UserResponse extends RepresentationModel<UserResponse> implements DTOIdentifiable<UUID> {
 
     private final UUID id;
     private final String username;
     private final String email;
     private final Integer attempt;
     private final Boolean active;
-    private final Set<DTOResponseRole> role;
+    private final Set<RoleResponse> role;
 
-    public DTOResponseUser(UUID id, String username, String email, Integer attempt, Boolean active, Set<DTOResponseRole> role) {
+    public UserResponse(UUID id, String username, String email, Integer attempt, Boolean active, Set<RoleResponse> role) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -93,7 +93,7 @@ public class DTOResponseUser extends RepresentationModel<DTOResponseUser> implem
     public Boolean getActive() {
         return active;
     }
-    public Set<DTOResponseRole> getRole() {
+    public Set<RoleResponse> getRole() {
         return role;
     }
 

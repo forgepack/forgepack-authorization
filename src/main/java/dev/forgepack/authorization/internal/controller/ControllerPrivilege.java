@@ -1,10 +1,10 @@
 package dev.forgepack.authorization.internal.controller;
 
 import dev.forgepack.authorization.internal.model.Privilege;
-import dev.forgepack.authorization.internal.payload.DTORequestPrivilege;
-import dev.forgepack.authorization.internal.payload.DTOResponsePrivilege;
-import dev.forgepack.authorization.internal.service.ServicePrivilege;
-import dev.forgepack.core.internal.controller.ControllerCrudRestorableImpl;
+import dev.forgepack.authorization.internal.payload.PrivilegeRequest;
+import dev.forgepack.authorization.internal.payload.PrivilegeResponse;
+import dev.forgepack.authorization.internal.service.PrivilegeService;
+import dev.forgepack.core.internal.controller.RestorableControllerImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,24 +15,24 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/privilege")
-public class ControllerPrivilege extends ControllerCrudRestorableImpl<Privilege, DTORequestPrivilege, DTOResponsePrivilege> {
+public class ControllerPrivilege extends RestorableControllerImpl<Privilege, PrivilegeRequest, PrivilegeResponse> {
 
-    private final ServicePrivilege servicePrivilege;
+    private final PrivilegeService privilegeService;
 
-    public ControllerPrivilege(ServicePrivilege servicePrivilege) {
-        super(Privilege.class, servicePrivilege);
-        this.servicePrivilege = servicePrivilege;
+    public ControllerPrivilege(PrivilegeService PrivilegeService) {
+        super(Privilege.class, PrivilegeService);
+        this.privilegeService = PrivilegeService;
     }
 
 //    @PreAuthorize("hasAnyRole('ADMIN') and hasAnyAuthority('user:delete')")
     @DeleteMapping("/{id}/permanent")
     public ResponseEntity<Void> hardDelete(@PathVariable UUID id){
-        servicePrivilege.hardDelete(id);
+        privilegeService.hardDelete(id);
         return ResponseEntity.noContent().build();
     }
 //    @PreAuthorize("hasAnyRole('ADMIN') and hasAnyAuthority('user:delete')")
     @PostMapping("/{id}/restore")
-    public ResponseEntity<DTOResponsePrivilege> restore(@PathVariable UUID id){
-        return ResponseEntity.accepted().body(servicePrivilege.restore(id));
+    public ResponseEntity<PrivilegeResponse> restore(@PathVariable UUID id){
+        return ResponseEntity.accepted().body(privilegeService.restore(id));
     }
 }

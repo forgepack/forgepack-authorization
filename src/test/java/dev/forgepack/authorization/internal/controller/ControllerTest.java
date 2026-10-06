@@ -9,12 +9,12 @@ import static org.mockito.Mockito.when;
 
 import java.util.UUID;
 
-import dev.forgepack.authorization.internal.payload.DTOResponsePrivilege;
-import dev.forgepack.authorization.internal.payload.DTOResponseRole;
-import dev.forgepack.authorization.internal.payload.DTOResponseUser;
-import dev.forgepack.authorization.internal.service.ServicePrivilege;
-import dev.forgepack.authorization.internal.service.ServiceRole;
-import dev.forgepack.authorization.internal.service.ServiceUser;
+import dev.forgepack.authorization.internal.payload.PrivilegeResponse;
+import dev.forgepack.authorization.internal.payload.RoleResponse;
+import dev.forgepack.authorization.internal.payload.UserResponse;
+import dev.forgepack.authorization.internal.service.PrivilegeService;
+import dev.forgepack.authorization.internal.service.RoleService;
+import dev.forgepack.authorization.internal.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,51 +23,51 @@ class ControllerTest {
 
     @Test
     void privilegeControllerDelegatesHardDeleteAndRestoreToService() {
-        ServicePrivilege servicePrivilege = mock(ServicePrivilege.class);
-        ControllerPrivilege controller = new ControllerPrivilege(servicePrivilege);
+        PrivilegeService PrivilegeService = mock(PrivilegeService.class);
+        ControllerPrivilege controller = new ControllerPrivilege(PrivilegeService);
         UUID id = UUID.randomUUID();
-        DTOResponsePrivilege response = new DTOResponsePrivilege(id, "read");
-        when(servicePrivilege.restore(id)).thenReturn(response);
+        PrivilegeResponse response = new PrivilegeResponse(id, "read");
+        when(PrivilegeService.restore(id)).thenReturn(response);
 
         ResponseEntity<Void> hardDeleteResponse = controller.hardDelete(id);
-        verify(servicePrivilege).hardDelete(eq(id));
+        verify(PrivilegeService).hardDelete(eq(id));
         assertEquals(HttpStatus.NO_CONTENT, hardDeleteResponse.getStatusCode());
 
-        ResponseEntity<DTOResponsePrivilege> restoreResponse = controller.restore(id);
+        ResponseEntity<PrivilegeResponse> restoreResponse = controller.restore(id);
         assertEquals(HttpStatus.ACCEPTED, restoreResponse.getStatusCode());
         assertSame(response, restoreResponse.getBody());
     }
 
     @Test
     void roleControllerDelegatesHardDeleteAndRestoreToService() {
-        ServiceRole serviceRole = mock(ServiceRole.class);
-        ControllerRole controller = new ControllerRole(serviceRole);
+        RoleService roleService = mock(RoleService.class);
+        ControllerRole controller = new ControllerRole(roleService);
         UUID id = UUID.randomUUID();
-        DTOResponseRole response = new DTOResponseRole(id, "admin", null);
-        when(serviceRole.restore(id)).thenReturn(response);
+        RoleResponse response = new RoleResponse(id, "admin", null);
+        when(roleService.restore(id)).thenReturn(response);
 
         ResponseEntity<Void> hardDeleteResponse = controller.hardDelete(id);
-        verify(serviceRole).hardDelete(eq(id));
+        verify(roleService).hardDelete(eq(id));
         assertEquals(HttpStatus.NO_CONTENT, hardDeleteResponse.getStatusCode());
 
-        ResponseEntity<DTOResponseRole> restoreResponse = controller.restore(id);
+        ResponseEntity<RoleResponse> restoreResponse = controller.restore(id);
         assertEquals(HttpStatus.ACCEPTED, restoreResponse.getStatusCode());
         assertSame(response, restoreResponse.getBody());
     }
 
     @Test
     void userControllerDelegatesHardDeleteAndRestoreToService() {
-        ServiceUser serviceUser = mock(ServiceUser.class);
-        ControllerUser controller = new ControllerUser(serviceUser);
+        UserService userService = mock(UserService.class);
+        ControllerUser controller = new ControllerUser(userService);
         UUID id = UUID.randomUUID();
-        DTOResponseUser response = new DTOResponseUser(id, "jane", "jane@example.test", 0, true, null);
-        when(serviceUser.restore(id)).thenReturn(response);
+        UserResponse response = new UserResponse(id, "jane", "jane@example.test", 0, true, null);
+        when(userService.restore(id)).thenReturn(response);
 
         ResponseEntity<Void> hardDeleteResponse = controller.hardDelete(id);
-        verify(serviceUser).hardDelete(eq(id));
+        verify(userService).hardDelete(eq(id));
         assertEquals(HttpStatus.NO_CONTENT, hardDeleteResponse.getStatusCode());
 
-        ResponseEntity<DTOResponseUser> restoreResponse = controller.restore(id);
+        ResponseEntity<UserResponse> restoreResponse = controller.restore(id);
         assertEquals(HttpStatus.ACCEPTED, restoreResponse.getStatusCode());
         assertSame(response, restoreResponse.getBody());
     }

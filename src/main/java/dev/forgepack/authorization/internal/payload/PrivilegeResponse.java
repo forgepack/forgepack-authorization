@@ -24,7 +24,7 @@ import java.util.UUID;
  * <ul>
  *     <li>Returned by REST endpoints exposing privilege data</li>
  *     <li>Used in role composition and authorization visualization</li>
- *     <li>Can be embedded within other DTOs (e.g., {@link DTOResponseRole})</li>
+ *     <li>Can be embedded within other DTOs (e.g., {@link RoleResponse})</li>
  * </ul>
  *
  * <h3>HATEOAS Support</h3>
@@ -45,15 +45,15 @@ import java.util.UUID;
  * @since 1.0
  *
  * @see Privilege
- * @see DTOResponseRole
+ * @see RoleResponse
  * @see org.springframework.hateoas.RepresentationModel
  */
-public class DTOResponsePrivilege extends RepresentationModel<DTOResponsePrivilege> implements DTOIdentifiable<UUID> {
+public class PrivilegeResponse extends RepresentationModel<PrivilegeResponse> implements DTOIdentifiable<UUID> {
 
     private final UUID id;
     private final String name;
 
-    public DTOResponsePrivilege(UUID id, String name) {
+    public PrivilegeResponse(UUID id, String name) {
         this.id = id;
         this.name = name;
     }

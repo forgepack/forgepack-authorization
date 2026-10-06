@@ -1,13 +1,13 @@
 package dev.forgepack.authorization.internal.service;
 
 import dev.forgepack.core.api.mapper.Mapper;
-import dev.forgepack.core.api.repository.RepositoryCrud;
-import dev.forgepack.core.internal.service.ServiceCrudRestorableImpl;
-import dev.forgepack.validation.api.service.ServiceUniqueCheckable;
+import dev.forgepack.core.api.repository.CrudRepository;
+import dev.forgepack.core.internal.service.RestorableServiceImpl;
+import dev.forgepack.validation.api.service.UniqueCheckableService;
 import dev.forgepack.authorization.internal.model.User;
-import dev.forgepack.authorization.internal.payload.DTORequestUser;
-import dev.forgepack.authorization.internal.payload.DTOResponseUser;
-import dev.forgepack.authorization.internal.repository.RepositoryUser;
+import dev.forgepack.authorization.internal.payload.UserRequest;
+import dev.forgepack.authorization.internal.payload.UserResponse;
+import dev.forgepack.authorization.internal.repository.UserRepository;
 // import dev.forgepack.security.internal.utils.Information;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,24 +18,24 @@ import java.security.SecureRandom;
 import java.util.UUID;
 
 @Service
-public class ServiceUser extends ServiceCrudRestorableImpl<User, DTORequestUser, DTOResponseUser> implements ServiceUniqueCheckable {
+public class UserService extends RestorableServiceImpl<User, UserRequest, UserResponse> implements UniqueCheckableService {
 
-    private final RepositoryUser repositoryUser;
-    private static final Logger log = LoggerFactory.getLogger(ServiceUser.class);
+    private final UserRepository userRepository;
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
-    public ServiceUser(RepositoryCrud<User> repositoryGeneric, Mapper<User, DTORequestUser, DTOResponseUser> mapperInterface, RepositoryUser repositoryUser) {
+    public UserService(CrudRepository<User> repositoryGeneric, Mapper<User, UserRequest, UserResponse> mapperInterface, UserRepository userRepository) {
         super(User.class, repositoryGeneric, mapperInterface);
-        this.repositoryUser = repositoryUser;
+        this.userRepository = userRepository;
     }
 
     @Override
     @Transactional(readOnly = true)
     public boolean existsByField(String field, Object value) {
         if ("username".equals(field)) {
-            return repositoryUser.existsByUsernameIgnoreCase((String) value);
+            return userRepository.existsByUsernameIgnoreCase((String) value);
         }
         if ("email".equals(field)) {
-            return repositoryUser.existsByEmailIgnoreCase((String) value);
+            return userRepository.existsByEmailIgnoreCase((String) value);
         }
         else {
             throw new IllegalArgumentException("Unsupported field: " + field);
@@ -46,10 +46,10 @@ public class ServiceUser extends ServiceCrudRestorableImpl<User, DTORequestUser,
     @Transactional(readOnly = true)
     public boolean existsByFieldAndIdNot(String field, Object value, UUID id) {
         if ("username".equals(field)){
-            return repositoryUser.existsByUsernameIgnoreCaseAndIdNot((String) value, id);
+            return userRepository.existsByUsernameIgnoreCaseAndIdNot((String) value, id);
         }
         if ("email".equals(field)){
-            return repositoryUser.existsByEmailIgnoreCaseAndIdNot((String) value, id);
+            return userRepository.existsByEmailIgnoreCaseAndIdNot((String) value, id);
         } else {
             throw new IllegalArgumentException("Unsupported field: " + field);
         }
@@ -82,7 +82,7 @@ public class ServiceUser extends ServiceCrudRestorableImpl<User, DTORequestUser,
     }
     public User isValidToChange(UUID id) {
         // String currentUser = Information.getCurrentUser().orElse("Unknown User");
-        User user = repositoryUser.findByIdAndDeletedAtIsNull(id).orElseThrow(() -> new EntityNotFoundException("Resource not found"));
+        User user = userRepository.findByIdAndDeletedAtIsNull(id).orElseThrow(() -> new EntityNotFoundException("Resource not found"));
         // User userCurrent = repositoryUser.findByUsername(currentUser).orElseThrow(() -> new EntityNotFoundException("Current user not found"));
         // if ((userCurrent.getUsername() != null && user.getUsername() != null &&
         //         userCurrent.getUsername().equals(user.getUsername())) ||
@@ -94,7 +94,7 @@ public class ServiceUser extends ServiceCrudRestorableImpl<User, DTORequestUser,
         // }
     }
     public User isValidToChange(String username) {
-        User user = repositoryUser.findByUsername(username.trim())
+        User user = userRepository.findByUsername(username.trim())
                 .orElseThrow(() -> new EntityNotFoundException("Resource not found"));
         // String currentUsername = Information.getCurrentUser().orElse(null);
         // if (currentUsername == null) {

@@ -28,7 +28,7 @@ import java.util.UUID;
  * <ul>
  *     <li>Returned by REST endpoints exposing role data</li>
  *     <li>Represents role-permission composition in RBAC systems</li>
- *     <li>Can be embedded within other DTOs (e.g., {@link DTOResponseUser})</li>
+ *     <li>Can be embedded within other DTOs (e.g., {@link UserResponse})</li>
  * </ul>
  *
  * <h3>HATEOAS Support</h3>
@@ -50,17 +50,17 @@ import java.util.UUID;
  *
  * @see Role
  * @see Privilege
- * @see DTOResponsePrivilege
+ * @see PrivilegeResponse
  * @see org.springframework.hateoas.RepresentationModel
  */
 
-public class DTOResponseRole extends RepresentationModel<DTOResponseRole> implements DTOIdentifiable<UUID> {
+public class RoleResponse extends RepresentationModel<RoleResponse> implements DTOIdentifiable<UUID> {
 
     private final UUID id;
     private final String name;
-    private Set<DTOResponsePrivilege> privilege = new HashSet<>();
+    private Set<PrivilegeResponse> privilege = new HashSet<>();
 
-    public DTOResponseRole(UUID id, String name, Set<DTOResponsePrivilege> privilege) {
+    public RoleResponse(UUID id, String name, Set<PrivilegeResponse> privilege) {
         this.id = id;
         this.name = name;
         this.privilege = privilege;
@@ -72,7 +72,7 @@ public class DTOResponseRole extends RepresentationModel<DTOResponseRole> implem
     public String getName() {
         return name;
     }
-    public Set<DTOResponsePrivilege> getDTOResponsePrivilege() {
+    public Set<PrivilegeResponse> getDTOResponsePrivilege() {
         return privilege;
     }
 

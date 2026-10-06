@@ -3,7 +3,7 @@ package dev.forgepack.authorization.internal.payload;
 import dev.forgepack.validation.api.annotation.Unique;
 import dev.forgepack.core.api.payload.DTOIdentifiable;
 import dev.forgepack.authorization.internal.model.User;
-import dev.forgepack.authorization.internal.service.ServiceUser;
+import dev.forgepack.authorization.internal.service.UserService;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -52,11 +52,11 @@ import java.util.UUID;
  * @since 1.0
  *
  * @see DTOIdentifiable
- * @see DTOResponseRole
+ * @see RoleResponse
  * @see User
  */
-@Unique(service = ServiceUser.class, fields = { "username", "email" })
-public record DTORequestUser (
+@Unique(service = UserService.class, fields = { "username", "email" })
+public record UserRequest(
 
     UUID id,
     @NotNull(message = "{not.null}") @NotBlank(message = "{not.blank}")
@@ -64,5 +64,5 @@ public record DTORequestUser (
     @NotNull(message = "{not.null}") @NotBlank(message = "{not.blank}") @Size(max = 50) @Email
     String email,
 
-    Set<DTOResponseRole> role
+    Set<RoleResponse> role
 ) implements DTOIdentifiable<UUID> {}

@@ -2,41 +2,41 @@ package dev.forgepack.authorization.internal.mapper;
 
 import dev.forgepack.core.api.mapper.Mapper;
 import dev.forgepack.authorization.internal.model.Privilege;
-import dev.forgepack.authorization.internal.payload.DTORequestPrivilege;
-import dev.forgepack.authorization.internal.payload.DTOResponsePrivilege;
+import dev.forgepack.authorization.internal.payload.PrivilegeRequest;
+import dev.forgepack.authorization.internal.payload.PrivilegeResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public final class MapperPrivilege implements Mapper<Privilege, DTORequestPrivilege, DTOResponsePrivilege> {
+public final class PrivilegeMapper implements Mapper<Privilege, PrivilegeRequest, PrivilegeResponse> {
 
-    private MapperPrivilege() {}
+    private PrivilegeMapper() {}
 
     @Override
-    public Privilege toEntity(DTORequestPrivilege dto) {
+    public Privilege toEntity(PrivilegeRequest dto) {
         if (dto == null) return null;
         return new Privilege(dto.name());
     }
 
     @Override
-    public DTOResponsePrivilege toResponse(Privilege entity) {
+    public PrivilegeResponse toResponse(Privilege entity) {
         if (entity == null) return null;
-        return new DTOResponsePrivilege(
+        return new PrivilegeResponse(
                 entity.getId(),
                 entity.getName()
         );
     }
 
     @Override
-    public void updateEntity(DTORequestPrivilege dto, Privilege entity) {
+    public void updateEntity(PrivilegeRequest dto, Privilege entity) {
         if (dto == null || entity == null) return;
         entity.setName(dto.name());
     }
 
     @Override
-    public Set<DTOResponsePrivilege> toResponseSet(Set<Privilege> entities) {
+    public Set<PrivilegeResponse> toResponseSet(Set<Privilege> entities) {
         if (entities == null) return Set.of();
         return entities.stream()
                 .map(this::toResponse)
@@ -44,12 +44,12 @@ public final class MapperPrivilege implements Mapper<Privilege, DTORequestPrivil
     }
 
     /**
-     * Converts a set of {@link DTOResponsePrivilege} DTOs into a set of {@link Privilege} entities.
+     * Converts a set of {@link PrivilegeResponse} DTOs into a set of {@link Privilege} entities.
      *
      * @param dtos set of response DTOs to convert
      * @return set of entities, or an empty set if {@code dtos} is {@code null}
      */
-    public Set<Privilege> toEntitySet(Set<DTOResponsePrivilege> dtos) {
+    public Set<Privilege> toEntitySet(Set<PrivilegeResponse> dtos) {
         if (dtos == null) return Set.of();
         return dtos.stream()
                 .map(dto -> {

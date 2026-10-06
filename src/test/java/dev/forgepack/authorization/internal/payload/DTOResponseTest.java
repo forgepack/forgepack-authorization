@@ -13,7 +13,7 @@ class DTOResponseTest {
     @Test
     void privilegeResponseExposesIdAndName() {
         UUID id = UUID.randomUUID();
-        DTOResponsePrivilege response = new DTOResponsePrivilege(id, "read");
+        PrivilegeResponse response = new PrivilegeResponse(id, "read");
 
         assertEquals(id, response.getId());
         assertEquals("read", response.getName());
@@ -23,8 +23,8 @@ class DTOResponseTest {
     @Test
     void roleResponseExposesIdNameAndPrivileges() {
         UUID id = UUID.randomUUID();
-        DTOResponsePrivilege privilege = new DTOResponsePrivilege(UUID.randomUUID(), "read");
-        DTOResponseRole response = new DTOResponseRole(id, "admin", Set.of(privilege));
+        PrivilegeResponse privilege = new PrivilegeResponse(UUID.randomUUID(), "read");
+        RoleResponse response = new RoleResponse(id, "admin", Set.of(privilege));
 
         assertEquals(id, response.getId());
         assertEquals("admin", response.getName());
@@ -35,8 +35,8 @@ class DTOResponseTest {
     @Test
     void userResponseExposesAllFields() {
         UUID id = UUID.randomUUID();
-        DTOResponseRole role = new DTOResponseRole(UUID.randomUUID(), "admin", Set.of());
-        DTOResponseUser response = new DTOResponseUser(id, "jane", "jane@example.test", 3, true, Set.of(role));
+        RoleResponse role = new RoleResponse(UUID.randomUUID(), "admin", Set.of());
+        UserResponse response = new UserResponse(id, "jane", "jane@example.test", 3, true, Set.of(role));
 
         assertEquals(id, response.getId());
         assertEquals("jane", response.getUsername());

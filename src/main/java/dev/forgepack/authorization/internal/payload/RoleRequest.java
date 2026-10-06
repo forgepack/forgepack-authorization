@@ -3,7 +3,7 @@ package dev.forgepack.authorization.internal.payload;
 import dev.forgepack.validation.api.annotation.Unique;
 import dev.forgepack.core.api.payload.DTOIdentifiable;
 import dev.forgepack.authorization.internal.model.Role;
-import dev.forgepack.authorization.internal.service.ServiceRole;
+import dev.forgepack.authorization.internal.service.RoleService;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.Set;
@@ -48,15 +48,15 @@ import java.util.UUID;
  * @since 1.0
  *
  * @see DTOIdentifiable
- * @see DTOResponsePrivilege
+ * @see PrivilegeResponse
  * @see Role
  */
-@Unique(service = ServiceRole.class, fields = { "name" })
-public record DTORequestRole(
+@Unique(service = RoleService.class, fields = { "name" })
+public record RoleRequest(
 
         UUID id,
         @NotNull(message = "{not.null}") @NotBlank(message = "{not.blank}")
         String name,
-        Set<DTOResponsePrivilege> privilege
+        Set<PrivilegeResponse> privilege
 ) implements DTOIdentifiable<UUID> {
 }

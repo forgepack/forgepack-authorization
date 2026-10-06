@@ -11,104 +11,104 @@ import java.util.UUID;
 import dev.forgepack.authorization.internal.model.Privilege;
 import dev.forgepack.authorization.internal.model.Role;
 import dev.forgepack.authorization.internal.model.User;
-import dev.forgepack.authorization.internal.payload.DTORequestPrivilege;
-import dev.forgepack.authorization.internal.payload.DTORequestRole;
-import dev.forgepack.authorization.internal.payload.DTORequestUser;
-import dev.forgepack.authorization.internal.payload.DTOResponsePrivilege;
-import dev.forgepack.authorization.internal.payload.DTOResponseRole;
-import dev.forgepack.authorization.internal.payload.DTOResponseUser;
+import dev.forgepack.authorization.internal.payload.PrivilegeRequest;
+import dev.forgepack.authorization.internal.payload.RoleRequest;
+import dev.forgepack.authorization.internal.payload.UserRequest;
+import dev.forgepack.authorization.internal.payload.PrivilegeResponse;
+import dev.forgepack.authorization.internal.payload.RoleResponse;
+import dev.forgepack.authorization.internal.payload.UserResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MapperTest {
 
-    private MapperPrivilege mapperPrivilege;
-    private MapperRole mapperRole;
-    private MapperUser mapperUser;
+    private PrivilegeMapper PrivilegeMapper;
+    private RoleMapper RoleMapper;
+    private UserMapper UserMapper;
 
     @BeforeEach
     void setUp() throws ReflectiveOperationException {
-        Constructor<MapperPrivilege> constructor = MapperPrivilege.class.getDeclaredConstructor();
+        Constructor<PrivilegeMapper> constructor = PrivilegeMapper.class.getDeclaredConstructor();
         constructor.setAccessible(true);
-        mapperPrivilege = constructor.newInstance();
-        mapperRole = new MapperRole(mapperPrivilege);
-        mapperUser = new MapperUser(mapperRole);
+        PrivilegeMapper = constructor.newInstance();
+        RoleMapper = new RoleMapper(PrivilegeMapper);
+        UserMapper = new UserMapper(RoleMapper);
     }
 
     @Test
     void privilegeMapperConvertsValuesAndHandlesNullInputs() {
-        assertNull(mapperPrivilege.toEntity(null));
-        assertNull(mapperPrivilege.toResponse(null));
-        assertTrue(mapperPrivilege.toResponseSet(null).isEmpty());
-        assertTrue(mapperPrivilege.toEntitySet(null).isEmpty());
+        assertNull(PrivilegeMapper.toEntity(null));
+        assertNull(PrivilegeMapper.toResponse(null));
+        assertTrue(PrivilegeMapper.toResponseSet(null).isEmpty());
+        assertTrue(PrivilegeMapper.toEntitySet(null).isEmpty());
 
-        Privilege privilege = mapperPrivilege.toEntity(new DTORequestPrivilege(null, "read"));
+        Privilege privilege = PrivilegeMapper.toEntity(new PrivilegeRequest(null, "read"));
         assertEquals("read", privilege.getName());
-        mapperPrivilege.updateEntity(new DTORequestPrivilege(null, "write"), privilege);
+        PrivilegeMapper.updateEntity(new PrivilegeRequest(null, "write"), privilege);
         assertEquals("write", privilege.getName());
-        mapperPrivilege.updateEntity(null, privilege);
-        mapperPrivilege.updateEntity(new DTORequestPrivilege(null, "ignored"), null);
+        PrivilegeMapper.updateEntity(null, privilege);
+        PrivilegeMapper.updateEntity(new PrivilegeRequest(null, "ignored"), null);
         assertEquals("write", privilege.getName());
 
-        DTOResponsePrivilege response = mapperPrivilege.toResponse(privilege);
+        PrivilegeResponse response = PrivilegeMapper.toResponse(privilege);
         assertEquals("write", response.getName());
-        assertEquals(1, mapperPrivilege.toResponseSet(Set.of(privilege)).size());
-        Set<Privilege> privileges = mapperPrivilege.toEntitySet(Set.of(response));
+        assertEquals(1, PrivilegeMapper.toResponseSet(Set.of(privilege)).size());
+        Set<Privilege> privileges = PrivilegeMapper.toEntitySet(Set.of(response));
         assertEquals("write", privileges.iterator().next().getName());
     }
 
     @Test
     void roleMapperConvertsValuesAndUpdatesOptionalPrivileges() {
-        assertNull(mapperRole.toEntity(null));
-        assertNull(mapperRole.toResponse(null));
-        assertTrue(mapperRole.toResponseSet(null).isEmpty());
-        assertTrue(mapperRole.toEntitySet(null).isEmpty());
+        assertNull(RoleMapper.toEntity(null));
+        assertNull(RoleMapper.toResponse(null));
+        assertTrue(RoleMapper.toResponseSet(null).isEmpty());
+        assertTrue(RoleMapper.toEntitySet(null).isEmpty());
 
-        DTOResponsePrivilege responsePrivilege = new DTOResponsePrivilege(UUID.randomUUID(), "read");
-        Role role = mapperRole.toEntity(new DTORequestRole(null, "admin", Set.of(responsePrivilege)));
+        PrivilegeResponse responsePrivilege = new PrivilegeResponse(UUID.randomUUID(), "read");
+        Role role = RoleMapper.toEntity(new RoleRequest(null, "admin", Set.of(responsePrivilege)));
         assertEquals("admin", role.getName());
         assertEquals("read", role.getPrivilege().iterator().next().getName());
 
-        mapperRole.updateEntity(new DTORequestRole(null, "operator", null), role);
+        RoleMapper.updateEntity(new RoleRequest(null, "operator", null), role);
         assertEquals("operator", role.getName());
         assertEquals("read", role.getPrivilege().iterator().next().getName());
-        mapperRole.updateEntity(new DTORequestRole(null, "editor", Set.of(responsePrivilege)), role);
+        RoleMapper.updateEntity(new RoleRequest(null, "editor", Set.of(responsePrivilege)), role);
         assertEquals("editor", role.getName());
-        mapperRole.updateEntity(null, role);
-        mapperRole.updateEntity(new DTORequestRole(null, "ignored", null), null);
+        RoleMapper.updateEntity(null, role);
+        RoleMapper.updateEntity(new RoleRequest(null, "ignored", null), null);
         assertEquals("editor", role.getName());
 
-        DTOResponseRole responseRole = mapperRole.toResponse(role);
+        RoleResponse responseRole = RoleMapper.toResponse(role);
         assertEquals("editor", responseRole.getName());
         assertEquals(1, responseRole.getDTOResponsePrivilege().size());
-        assertEquals(1, mapperRole.toResponseSet(Set.of(role)).size());
-        Role convertedRole = mapperRole.toEntitySet(Set.of(new DTOResponseRole(null, "viewer", Set.of()))).iterator().next();
+        assertEquals(1, RoleMapper.toResponseSet(Set.of(role)).size());
+        Role convertedRole = RoleMapper.toEntitySet(Set.of(new RoleResponse(null, "viewer", Set.of()))).iterator().next();
         assertEquals("viewer", convertedRole.getName());
     }
 
     @Test
     void userMapperConvertsValuesAndUpdatesOptionalRoles() {
-        assertNull(mapperUser.toEntity(null));
-        assertNull(mapperUser.toResponse(null));
-        assertTrue(mapperUser.toResponseSet(null).isEmpty());
+        assertNull(UserMapper.toEntity(null));
+        assertNull(UserMapper.toResponse(null));
+        assertTrue(UserMapper.toResponseSet(null).isEmpty());
 
-        DTOResponseRole responseRole = new DTOResponseRole(null, "admin", Set.of());
-        User user = mapperUser.toEntity(new DTORequestUser(null, "jane", "jane@example.test", Set.of(responseRole)));
+        RoleResponse responseRole = new RoleResponse(null, "admin", Set.of());
+        User user = UserMapper.toEntity(new UserRequest(null, "jane", "jane@example.test", Set.of(responseRole)));
         assertEquals("jane", user.getUsername());
         assertEquals("admin", user.getRole().iterator().next().getName());
 
-        mapperUser.updateEntity(new DTORequestUser(null, "jane.doe", "jane@example.test", null), user);
+        UserMapper.updateEntity(new UserRequest(null, "jane.doe", "jane@example.test", null), user);
         assertEquals("jane.doe", user.getUsername());
         assertEquals("admin", user.getRole().iterator().next().getName());
-        mapperUser.updateEntity(new DTORequestUser(null, "jane", "jane.doe@example.test", Set.of(responseRole)), user);
+        UserMapper.updateEntity(new UserRequest(null, "jane", "jane.doe@example.test", Set.of(responseRole)), user);
         assertEquals("jane.doe@example.test", user.getEmail());
-        mapperUser.updateEntity(null, user);
-        mapperUser.updateEntity(new DTORequestUser(null, "ignored", "ignored@example.test", null), null);
+        UserMapper.updateEntity(null, user);
+        UserMapper.updateEntity(new UserRequest(null, "ignored", "ignored@example.test", null), null);
         assertEquals("jane", user.getUsername());
 
-        DTOResponseUser responseUser = mapperUser.toResponse(user);
+        UserResponse responseUser = UserMapper.toResponse(user);
         assertEquals("jane", responseUser.getUsername());
         assertEquals(1, responseUser.getRole().size());
-        assertEquals(1, mapperUser.toResponseSet(Set.of(user)).size());
+        assertEquals(1, UserMapper.toResponseSet(Set.of(user)).size());
     }
 }
