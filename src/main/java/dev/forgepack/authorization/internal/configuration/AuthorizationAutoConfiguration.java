@@ -8,11 +8,11 @@ import dev.forgepack.authorization.internal.repository.RoleRepository;
 import dev.forgepack.authorization.internal.repository.UserRepository;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @AutoConfiguration
-@AutoConfigurationPackage(basePackageClasses = {Privilege.class, Role.class, User.class})
+@EntityScan(basePackageClasses = {Privilege.class, Role.class, User.class})
 @EnableJpaRepositories(basePackageClasses = {
         PrivilegeRepository.class,
         RoleRepository.class,
