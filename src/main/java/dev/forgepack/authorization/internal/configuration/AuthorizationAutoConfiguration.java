@@ -1,22 +1,10 @@
 package dev.forgepack.authorization.internal.configuration;
 
-import dev.forgepack.authorization.internal.model.Privilege;
-import dev.forgepack.authorization.internal.model.Role;
-import dev.forgepack.authorization.internal.model.User;
-import dev.forgepack.authorization.internal.repository.PrivilegeRepository;
-import dev.forgepack.authorization.internal.repository.RoleRepository;
-import dev.forgepack.authorization.internal.repository.UserRepository;
-
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.persistence.autoconfigure.EntityScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import dev.forgepack.authorization.AuthorizationPackage;
 
 @AutoConfiguration
-@EntityScan(basePackageClasses = {Privilege.class, Role.class, User.class})
-@EnableJpaRepositories(basePackageClasses = {
-        PrivilegeRepository.class,
-        RoleRepository.class,
-        UserRepository.class
-})
+@AutoConfigurationPackage(basePackageClasses = AuthorizationPackage.class)
 public class AuthorizationAutoConfiguration {
 }
